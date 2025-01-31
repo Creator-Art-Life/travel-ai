@@ -1,8 +1,11 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
 function Hero() {
+  const [imageLoaded, setImageLoaded] = useState(true);
   return (
     <div className="flex flex-col items-center mx-4 md:mx-8 lg:mx-20 xl:mx-56 gap-4 md:gap-6 lg:gap-9 mt-12 max-md:mt-6 max-md:justify-center min-h-[90vh]">
       <h1 className="font-extrabold text-4xl sm:text-5xl md:text-6xl text-center leading-tight">
@@ -24,15 +27,18 @@ function Hero() {
         </Button>
       </Link>
 
-      <div className="w-[81vh] max-md:w-full max-md:max-h-[70vh] max-md:landscape:max-h-[80vh]overflow-hidden transition-all duration-300 ease-in-out">
-        <img
-          src={"/demo.png"}
-          srcSet="/demo.png 1x, /demo@2x.png 2x"
-          className="w-full h-full object-contain max-md:object-scale-downhover:scale-105 transition-transform duration-300"
-          alt="Travel plan preview"
-          loading="lazy"
-        />
-      </div>
+      {imageLoaded && (
+        <div className="w-[81vh] max-md:w-full max-md:max-h-[70vh] max-md:landscape:max-h-[80vh] overflow-hidden transition-all duration-300 ease-in-out">
+          <img
+            src="/demo.png"
+            srcSet="/demo.png 1x, /demo@2x.png 2x"
+            className="w-full h-full object-contain max-md:object-scale-down hover:scale-105 transition-transform duration-300"
+            alt="Travel plan preview"
+            loading="lazy"
+            onError={() => setImageLoaded(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }
